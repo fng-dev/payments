@@ -1,0 +1,31 @@
+{
+    "name": "fng-dev/gux-payment",
+    "description": "Payment system integrating MercadoPago and WebPay Plus",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Franco Nascimento",
+            "email": "fng.desenvolvedor@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "doctrine/inflector": "^1.0",
+        "transbank/transbank-sdk": "^1.7",
+        "mercadopago/dx-php": "^2.1"
+
+    },
+    "autoload": {
+        "psr-4": {
+            "Fng\\Payments\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Fng\\Payments\\PaymentServiceProvider"
+            ]
+        }
+    }
+}
