@@ -8,7 +8,7 @@
 ## Installation
 
 ```sh
-composer require fng-dev/category-base
+composer require fng-dev/gux-payments:@dev-master
 ```
 
 ## Configs

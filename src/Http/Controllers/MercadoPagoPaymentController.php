@@ -107,7 +107,7 @@ class MercadoPagoPaymentController extends Controller
 
                 $preference->payer = $payer;
 
-                $webHook = env('MP_WEBHOOK', false);
+                $webHook = env('MP_WEBHOOK', true);
 
                 if ($webHook) {
                     $preference->notification_url =  env('APP_URL') . "/payments/mercadopago/webhook";
@@ -116,7 +116,7 @@ class MercadoPagoPaymentController extends Controller
                 $preference->external_reference = $buyOrder;
                 $preference->save();
 
-                $initPoint = getenv("MERCADO_PAGO_ENVIROMENT") === "PRODUCTION" ? $preference->init_point : $preference->sandbox_init_point;
+                $initPoint = getenv("PAYMENT_ENVIROMENT") === "PRODUCTION" ? $preference->init_point : $preference->sandbox_init_point;
 
                 return response()->json([
                     "url" => $initPoint
@@ -205,7 +205,7 @@ class MercadoPagoPaymentController extends Controller
 
         $this->CONFIG = SDK::config();
 
-        $ACCESS_TOKEN = (env("MERCADO_PAGO_ENVIROMENT") == 'PRODUCTION') ? env("MERCADO_PAGO_ACCESS_TOKEN") : env("MERCADO_PAGO_ACCESS_TOKEN_SANDBOX");
+        $ACCESS_TOKEN = (env("PAYMENT_ENVIROMENT") == 'PRODUCTION') ? env("MERCADO_PAGO_ACCESS_TOKEN") : env("MERCADO_PAGO_ACCESS_TOKEN_SANDBOX");
 
         $this->CONFIG->set("ACCESS_TOKEN", $ACCESS_TOKEN);
     }
