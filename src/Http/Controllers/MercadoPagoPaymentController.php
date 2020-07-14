@@ -50,11 +50,11 @@ class MercadoPagoPaymentController extends Controller
 
         $this->validate($request, $validations);
 
-        // $user = Auth::user();
+        $user = Auth::user();
         $buyOrder = date("YmdHis") . rand(0, 9999) . "MP";
 
         try {
-            return DB::transaction(function () use ($request, $buyOrder) {
+            return DB::transaction(function () use ($request, $buyOrder, $user) {
                 $payment = Payment::create([
                     "amount" => $request->amount,
                     "shipping_amount" => $request->shipping_amount,
@@ -62,7 +62,7 @@ class MercadoPagoPaymentController extends Controller
                     "payment_type" => $request->payment_type,
                     "payment_company" => "mercado_pago",
                     "buy_order" => $buyOrder,
-                    "user_id" => 1,
+                    "user_id" => $user->id,
                 ]);
 
                 $preference = new Preference();
@@ -93,9 +93,9 @@ class MercadoPagoPaymentController extends Controller
                 $preference->items = $itemsMP;
 
                 $preference->back_urls = [
-                    "success" => env('APP_URL') . "/payment/mercadopago/success",
-                    "pending" => env('APP_URL') . "/payment/mercadopago/pending",
-                    "failure" => env('APP_URL') . "/payment/mercadopago/failure",
+                    "success" => env('APP_URL') . "/payments/mercadopago/success",
+                    "pending" => env('APP_URL') . "/payments/mercadopago/pending",
+                    "failure" => env('APP_URL') . "/payments/mercadopago/failure",
                 ];
 
                 $preference->auto_return = "all";
@@ -104,14 +104,13 @@ class MercadoPagoPaymentController extends Controller
                 $payer = new Payer();
                 $payer->name = $payerData->name;
                 $payer->surname = $payerData->surname;
-                $payer->email = "francong.koko@gmail.com";
 
                 $preference->payer = $payer;
 
                 $webHook = env('MP_WEBHOOK', false);
 
                 if ($webHook) {
-                    $preference->notification_url =  env('APP_URL') . "/payment/mercadopago/webhook";
+                    $preference->notification_url =  env('APP_URL') . "/payments/mercadopago/webhook";
                 }
 
                 $preference->external_reference = $buyOrder;
@@ -140,7 +139,8 @@ class MercadoPagoPaymentController extends Controller
             "merchant_order_id" => $request->merchant_order_id,
             "preference_id" => $request->preference_id,
         ]);
-        return response()->json([$request->all(), $payment]);
+        $payment->makeHidden('user_id');
+        return redirect()->to(env('FRONT_RETURN_PAYMENT') . '?' . http_build_query($payment->toArray()));
     }
 
     public function success(Request $request)
@@ -153,7 +153,8 @@ class MercadoPagoPaymentController extends Controller
             "merchant_order_id" => $request->merchant_order_id,
             "preference_id" => $request->preference_id,
         ]);
-        return response()->json([$request->all(), $payment]);
+        $payment->makeHidden('user_id');
+        return redirect()->to(env('FRONT_RETURN_PAYMENT') . '?' . http_build_query($payment->toArray()));
     }
 
     public function pending(Request $request)
@@ -166,7 +167,8 @@ class MercadoPagoPaymentController extends Controller
             "merchant_order_id" => $request->merchant_order_id,
             "preference_id" => $request->preference_id,
         ]);
-        return response()->json([$request->all(), $payment]);
+        $payment->makeHidden('user_id');
+        return redirect()->to(env('FRONT_RETURN_PAYMENT') . '?' . http_build_query($payment->toArray()));
     }
 
     public function updateStatusWebHook(Request $request)
@@ -196,7 +198,6 @@ class MercadoPagoPaymentController extends Controller
 
         return response()->json(['message' => 'Type not configured'], 400);
     }
-
 
     private function setupMercadoPago()
     {
