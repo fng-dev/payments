@@ -15,14 +15,16 @@ class CreateGuxPaymentsTable extends Migration
     {
         Schema::create('gux_payments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('buy_order')->nullable();
+            $table->string('buy_order')->nullable()->comment('External Reference');
             $table->decimal('amount', 10, 2)->nullable();
             $table->decimal('shipping_amount', 10, 2)->nullable();
             $table->string('status')->nullable();
             $table->string('payment_type')->nullable();
             $table->string('payment_company')->nullable()->comment('WebPay / MercadoPago');
             $table->string('session_id')->nullable()->comment('Session transaction id');
-            $table->string('payment_id')->nullable()->comment('External Reference');
+            $table->string('collection_id')->nullable()->comment('MP Collection ID');
+            $table->string('preference_id')->nullable()->comment('MP Preference id');
+            $table->string('merchant_order_id')->nullable()->comment('MP merchant order id');
             $table->integer('share_number')->nullable()->comment('Quotas');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');

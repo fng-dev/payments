@@ -5,7 +5,7 @@ namespace Fng\Payments\Models;
 use Fng\Payments\Models\Payment;
 use Illuminate\Database\Eloquent\Model;
 
-class Items extends Model
+class Item extends Model
 {
     protected $table = "gux_items_payment";
 

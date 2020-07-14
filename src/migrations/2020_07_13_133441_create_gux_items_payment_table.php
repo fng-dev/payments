@@ -15,8 +15,8 @@ class CreateGuxItemsPaymentTable extends Migration
     {
         Schema::create('gux_items_payment', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->decimal('amount',9,2)->nullable();
-            $table->decimal('quantity', 9,2)->nullable();
+            $table->decimal('price_unit', 10, 2)->nullable();
+            $table->decimal('quantity', 10, 2)->nullable();
             $table->string('unit')->nullable();
             $table->string('name')->nullable();
             $table->text('description')->nullable();

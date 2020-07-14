@@ -2,7 +2,7 @@
 
 namespace Fng\Payments\Models;
 
-use Fng\Payments\Models\Items;
+use Fng\Payments\Models\Item;
 use Illuminate\Database\Eloquent\Model;
 
 class Payment extends Model
@@ -17,7 +17,9 @@ class Payment extends Model
         'payment_type',
         'payment_company',
         'session_id',
-        'payment_id',
+        'collection_id',
+        'preference_id',
+        'merchant_order_id',
         'share_number',
         'user_id',
     ];
@@ -54,6 +56,6 @@ class Payment extends Model
 
     public function items()
     {
-        return $this->hasMany(Items::class);
+        return $this->hasMany(Item::class);
     }
 }
