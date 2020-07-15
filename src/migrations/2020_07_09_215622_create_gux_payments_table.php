@@ -21,11 +21,12 @@ class CreateGuxPaymentsTable extends Migration
             $table->string('status')->nullable();
             $table->string('payment_type')->nullable();
             $table->string('payment_company')->nullable()->comment('WebPay / MercadoPago');
-            $table->string('session_id')->nullable()->comment('Session transaction id');
+            $table->string('session_id')->nullable()->comment('Session transaction id | token_ws');
             $table->string('collection_id')->nullable()->comment('MP Collection ID');
             $table->string('preference_id')->nullable()->comment('MP Preference id');
             $table->string('merchant_order_id')->nullable()->comment('MP merchant order id');
             $table->integer('share_number')->nullable()->comment('Quotas');
+            $table->string('details')->nullable()->comment('Additional information');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

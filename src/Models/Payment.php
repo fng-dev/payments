@@ -21,6 +21,7 @@ class Payment extends Model
         'preference_id',
         'merchant_order_id',
         'share_number',
+        'details',
         'user_id',
     ];
 
