@@ -31,9 +31,10 @@ The return url for the webhook, as well as the response url, use the laravel / l
 APP_URL=https://www.your-site.com
 ```
 
-If you need to take any action after a ```Mercado Pago Webhook``` request, such as sending an email for example, you can enter an internal endpoint to be called at the end of the ```MERCADO PAGO``` request. Keep in mind that the first request from the ```Mercado Pago Webhook``` waits 22 seconds for a valid response, and the next only 5 seconds.
+If you need to take any action after a ```Mercado Pago Webhook``` or ```Transbank Response``` request, such as sending an email for example, you can enter an internal endpoint to be called at the end of the ```MERCADO PAGO``` or ```TRANSBANK``` request. Keep in mind that the first request from the ```Mercado Pago Webhook``` waits 22 seconds for a valid response, and the next only 5 seconds.
 
 inform variable ```MERCADO_PAGO_INTERNAL_WEBHOOK``` in your .env file with the endpoint
+inform variable ```TRANSBANK_INTERNAL_WEBHOOK``` in your .env file with the endpoint
 
 This hook is made in POST format, and sends a ```JSON``` object as a parameter
 
