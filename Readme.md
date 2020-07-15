@@ -11,6 +11,12 @@
 composer require fng-dev/gux-payments:dev-master
 ```
 
+## Installation Errors
+
+If the version of the doctrine/inflector is greater than 1.4, it will be necessary to make a dowgrade for this version for the sdk of the mercadopago work.
+
+```composer require doctrine/inflector:^1  ```
+
 ## Configs
 
 ### ENV
@@ -60,8 +66,10 @@ return response()->json($response);
 VARIABLES
 
 ```
-MERCADO_PAGO_ENVIROMENT='SANDBOX|PRODUCTION'
-MERCADO_PAGO_PUBLIC_KEY_SANDBOX='SANDBOX PUBLIC KEY'
+PAYMENT_ENVIROMENT='SANDBOX|PRODUCTION'
+FRONT_RETURN_PAYMENT='https://www.your-site.com/responses'
+
+MERCADO_PAGO_PUBLIC_KEY_SANDBOX=SANDBOX PUBLIC KEY
 MERCADO_PAGO_ACCESS_TOKEN_SANDBOX=SANDBOX ACCESS TOKEN
 
 MERCADO_PAGO_PUBLIC_KEY=PRODUCTION PUBLIC KEY
@@ -71,7 +79,12 @@ MERCADO_PAGO_CLIENT_SECRET=CLIENT SECRET
 
 MP_WEBHOOK=true
 MERCADO_PAGO_INTERNAL_WEBHOOK=false|/your/endpoint/to/your/hook
-FRONT_RETURN_PAYMENT='https://www.your-site.com/responses'
+
+TRANSBANK_CODIGO_COMERCIO=35669965
+TRANSBANK_PRIVATE_KEY='url/to/key'
+TRANSBANK_PUBLIC_CERT='url/to/key'
+TRANSBANK_WEBPAY_CERT='url/to/key'
+TRANSBANK_INTERNAL_WEBHOOK=false|/your/endpoint/to/your/hook
 ```
 
 ### Lumen
