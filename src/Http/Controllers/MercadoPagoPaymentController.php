@@ -51,6 +51,7 @@ class MercadoPagoPaymentController extends Controller
         $this->validate($request, $validations);
 
         $user = Auth::user();
+        // $user = (object) ["id" => 1];
         $buyOrder = date("YmdHis") . rand(0, 9999) . "MP";
 
         try {
@@ -62,6 +63,7 @@ class MercadoPagoPaymentController extends Controller
                     "payment_type" => $request->payment_type,
                     "payment_company" => "mercado_pago",
                     "buy_order" => $buyOrder,
+                    "details" => "Transacción iniciada",
                     "user_id" => $user->id,
                 ]);
 
@@ -138,6 +140,7 @@ class MercadoPagoPaymentController extends Controller
             "payment_type" => $request->payment_type,
             "merchant_order_id" => $request->merchant_order_id,
             "preference_id" => $request->preference_id,
+            "details" => "Rechazo de transacción"
         ]);
         $payment->makeHidden('user_id');
         return redirect()->to(env('FRONT_RETURN_PAYMENT') . '?' . http_build_query($payment->toArray()));
@@ -152,6 +155,7 @@ class MercadoPagoPaymentController extends Controller
             "payment_type" => $request->payment_type,
             "merchant_order_id" => $request->merchant_order_id,
             "preference_id" => $request->preference_id,
+            "details" => "Transacción aprobada"
         ]);
         $payment->makeHidden('user_id');
         return redirect()->to(env('FRONT_RETURN_PAYMENT') . '?' . http_build_query($payment->toArray()));
@@ -166,6 +170,7 @@ class MercadoPagoPaymentController extends Controller
             "payment_type" => $request->payment_type,
             "merchant_order_id" => $request->merchant_order_id,
             "preference_id" => $request->preference_id,
+            "details" => "Transacción Pendiente"
         ]);
         $payment->makeHidden('user_id');
         return redirect()->to(env('FRONT_RETURN_PAYMENT') . '?' . http_build_query($payment->toArray()));

@@ -58,7 +58,7 @@ class WebPayPaymentController extends Controller
                     "payment_type" => $request->payment_type,
                     "payment_company" => "webpay",
                     "buy_order" => $buyOrder,
-                    "details" => "Initiated transaction",
+                    "details" => "Transacción iniciada",
                     "user_id" => $user->id,
                 ]);
 
@@ -123,6 +123,8 @@ class WebPayPaymentController extends Controller
             ]);
 
             $returnUrl = $response->urlRedirection;
+
+            // Add internal hook
 
             return SELF::redirect('POST', $returnUrl, ['token_ws' => $request->token_ws]);
 
