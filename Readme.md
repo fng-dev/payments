@@ -126,6 +126,8 @@ Run migrations command
 
 ## EndPoints
 
+[POST] Create
+
 After configuring everything, you can initiate a payment by accessing the following routes via post.
 
 ```[POST] /payments/mercadopago/create```
@@ -189,6 +191,16 @@ These routes wait as parameters the following data:
     "url": "https://webpay3gint.transbank.cl/webpayserver/initTransaction"
 }
 ```
+
+[GET] Payments
+
+Returns all payments associated with a logged in user
+
+```[POST] /payments```
+
+Returns a payment using your id
+
+```[POST] /payments/{id}```
 
 ## Useful Links
 
