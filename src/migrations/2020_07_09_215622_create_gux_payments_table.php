@@ -27,8 +27,7 @@ class CreateGuxPaymentsTable extends Migration
             $table->string('merchant_order_id')->nullable()->comment('MP merchant order id');
             $table->integer('share_number')->nullable()->comment('Quotas');
             $table->string('details')->nullable()->comment('Additional information');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

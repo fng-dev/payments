@@ -10,12 +10,13 @@ class Item extends Model
     protected $table = "gux_items_payment";
 
     protected $fillable = [
-        'amount',
+        'price_unit',
         'quantity',
         'unit',
         'name',
         'description',
         'img_url',
+        'external_id',
         'payment_id'
     ];
 

@@ -46,8 +46,13 @@ class WebPayPaymentController extends Controller
 
         $buyOrder = date("YmdHis") . rand(0, 9999) . "WP";
 
-        // $user = (object) ["id" => 1];
-        $user = Auth::user();
+        $auth = env('GUX_AUTH', true);
+
+        if ($auth) {
+            $user = Auth::user();
+        } else {
+            $user = (object) ["id" => 1];
+        }
 
         try {
             return DB::transaction(function () use ($request, $buyOrder, $user) {
@@ -66,6 +71,7 @@ class WebPayPaymentController extends Controller
                 foreach ($request->items as $item) {
                     $item = (object) $item;
                     Item::create([
+                        "external_id" => $item->id,
                         "price_unit" => $item->price_unit,
                         "quantity" => $item->quantity,
                         "unit" => isset($item->unit) ? $item->unit : null,
@@ -124,9 +130,18 @@ class WebPayPaymentController extends Controller
 
             $returnUrl = $response->urlRedirection;
 
-            // Add internal hook
+            $internalWebHook = env('TRANSBANK_INTERNAL_WEBHOOK', false);
+
+            if (!$internalWebHook) {
+                return SELF::redirect('POST', $returnUrl, ['token_ws' => $request->token_ws]);
+            }
+
+            $internalRequest = Request::create($internalWebHook, 'POST', $payment->toArray());
+            $response = app()->handle($internalRequest);
 
             return SELF::redirect('POST', $returnUrl, ['token_ws' => $request->token_ws]);
+
+
 
         } else {
 

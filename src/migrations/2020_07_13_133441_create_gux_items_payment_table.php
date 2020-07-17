@@ -21,6 +21,7 @@ class CreateGuxItemsPaymentTable extends Migration
             $table->string('name')->nullable();
             $table->text('description')->nullable();
             $table->string('img_url')->nullable();
+            $table->integer('external_id')->nullable();
             $table->unsignedBigInteger('payment_id');
             $table->foreign('payment_id')->references('id')->on('gux_payments')->onDelete('cascade');
             $table->timestamps();

@@ -50,8 +50,14 @@ class MercadoPagoPaymentController extends Controller
 
         $this->validate($request, $validations);
 
-        $user = Auth::user();
-        // $user = (object) ["id" => 1];
+        $auth = env('GUX_AUTH', true);
+
+        if ($auth) {
+            $user = Auth::user();
+        } else {
+            $user = (object) ["id" => 1];
+        }
+
         $buyOrder = date("YmdHis") . rand(0, 9999) . "MP";
 
         try {
@@ -80,6 +86,7 @@ class MercadoPagoPaymentController extends Controller
                     $itemMP->unit_price = $item->price_unit;
 
                     PaymentItem::create([
+                        "external_id" => $item->id,
                         "price_unit" => $item->price_unit,
                         "quantity" => $item->quantity,
                         "unit" => isset($item->unit) ? $item->unit : null,
