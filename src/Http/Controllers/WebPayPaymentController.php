@@ -140,9 +140,6 @@ class WebPayPaymentController extends Controller
             $response = app()->handle($internalRequest);
 
             return SELF::redirect('POST', $returnUrl, ['token_ws' => $request->token_ws]);
-
-
-
         } else {
 
             $payment = Payment::where('buy_order', $response->buyOrder)->get()->first();
@@ -152,8 +149,15 @@ class WebPayPaymentController extends Controller
                 "details" => SELF::responseCode($response->detailOutput->responseCode),
             ]);
 
-            $payment->makeHidden('user_id');
-            return redirect()->to(env('FRONT_RETURN_PAYMENT') . '?' . http_build_query($payment->toArray()));
+            $internalWebHook = env('TRANSBANK_INTERNAL_WEBHOOK', false);
+
+            if (!$internalWebHook) {
+                $payment->makeHidden('user_id');
+                return redirect()->to(env('FRONT_RETURN_PAYMENT') . '?' . http_build_query($payment->toArray()));
+            }
+
+            $internalRequest = Request::create($internalWebHook, 'POST', $payment->toArray());
+            $response = app()->handle($internalRequest);
         }
     }
 
