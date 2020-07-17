@@ -152,7 +152,7 @@ These routes wait as parameters the following data:
             "id": 2,
             "name": "Item 2",
             "quantity": 3,
-            "price_unit": 50000 // without dots - just numbers
+            "price_unit": 50000, // without dots - just numbers
             "img_url": "https://path/to/img", // Optional
             "description": "description", // Optional
             "unit": "ml", // Optional
