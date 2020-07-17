@@ -187,7 +187,7 @@ These routes wait as parameters the following data:
 
  ```json
 {
-    "token_ws": "e974070a11ba9d117d9f6f85d576d87fb1efb2cf05962b366cb35544ab1fc116",
+    "token_ws": "e974070a11ba9d117d9f6f85d576d87fb1efb2cf05962b366cb355ab1fc116",
     "url": "https://webpay3gint.transbank.cl/webpayserver/initTransaction"
 }
 ```
