@@ -159,7 +159,8 @@ These routes wait as parameters the following data:
         "name": "Franco",
         "surname": "Nascimento"
     },
-    "amount": 350000
+    "amount": 350000, // Total with shipping
+    "shipping_amount": 0 // Optional 
 }
 ```
 
@@ -175,7 +176,7 @@ These routes wait as parameters the following data:
 }
 ```
 
- ```[POST] /payments/mercadopago/create```
+ ```[POST] /payments/webpay/create```
  
  If everything went well, and the request was successful, the transbank method will return a url and a token, to go to the payment methods.
 
@@ -187,6 +188,14 @@ These routes wait as parameters the following data:
     "url": "https://webpay3gint.transbank.cl/webpayserver/initTransaction"
 }
 ```
+
+## Useful Links
+
+Test cards
+
+https://www.transbankdevelopers.cl/documentacion/como_empezar#ambiente-de-integracion
+
+https://www.mercadopago.com.br/developers/en/guides/payments/api/testing
 
 
 
