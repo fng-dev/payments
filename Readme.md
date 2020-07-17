@@ -8,7 +8,7 @@
 ## Installation
 
 ```sh
-composer require fng-dev/gux-payments
+composer require gux/payments
 ```
 
 ## Installation Errors
