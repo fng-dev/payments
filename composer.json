@@ -1,5 +1,5 @@
 {
-    "name": "fng-dev/gux-payments",
+    "name": "gux/payments",
     "description": "Payment system integrating MercadoPago and WebPay Plus",
     "type": "library",
     "license": "MIT",
